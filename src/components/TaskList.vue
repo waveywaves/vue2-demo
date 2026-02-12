@@ -14,18 +14,28 @@
   </div>
 </template>
 
-<script>
-import { mapState, mapGetters } from 'vuex'
+<script lang="ts">
+import { computed } from 'vue'
+import { useTaskStore, type Task } from '@/stores/taskStore'
 
 export default {
   name: 'TaskList',
-  computed: {
-    ...mapState(['tasks']),
-    ...mapGetters(['completedCount', 'pendingCount'])
-  },
-  methods: {
-    toggleTask(id) {
-      this.$store.commit('TOGGLE_TASK', id)
+  setup() {
+    const taskStore = useTaskStore()
+
+    const tasks = computed<Task[]>(() => taskStore.tasks)
+    const completedCount = computed(() => taskStore.completedCount)
+    const pendingCount = computed(() => taskStore.pendingCount)
+
+    const toggleTask = (id: number): void => {
+      taskStore.toggleTask(id)
+    }
+
+    return {
+      tasks,
+      completedCount,
+      pendingCount,
+      toggleTask
     }
   }
 }
