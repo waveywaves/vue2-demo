@@ -10,20 +10,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ref } from 'vue'
+import { useTaskStore } from '@/stores/taskStore'
+
 export default {
   name: 'TaskInput',
-  data() {
-    return {
-      newTask: ''
-    }
-  },
-  methods: {
-    addTask() {
-      if (this.newTask.trim()) {
-        this.$store.commit('ADD_TASK', this.newTask.trim())
-        this.newTask = ''
+  setup() {
+    const newTask = ref<string>('')
+    const taskStore = useTaskStore()
+
+    function addTask() {
+      if (newTask.value.trim()) {
+        taskStore.addTask(newTask.value.trim())
+        newTask.value = ''
       }
+    }
+
+    return {
+      newTask,
+      addTask
     }
   }
 }
