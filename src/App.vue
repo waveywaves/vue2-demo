@@ -25,18 +25,23 @@ export default {
 
 <style scoped>
 #app {
-  font-family: system-ui, -apple-system, sans-serif;
-  color: #333;
+  --color-text: #333;
+  --color-primary: #333;
+  --font-family: system-ui, -apple-system, sans-serif;
+  --spacing-base: 8px;
+
+  font-family: var(--font-family);
+  color: var(--color-text);
 }
 
 .container {
   max-width: 500px;
-  margin: 40px auto;
-  padding: 0 20px;
+  margin: calc(var(--spacing-base) * 5) auto;
+  padding: 0 calc(var(--spacing-base) * 2.5);
 }
 
 h1 {
-  margin-bottom: 24px;
+  margin-bottom: calc(var(--spacing-base) * 3);
   font-weight: 600;
 }
 </style>
