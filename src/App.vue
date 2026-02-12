@@ -1,22 +1,24 @@
 <template>
   <div id="app">
     <div class="container">
-      <h1>Vue 2 Task List</h1>
+      <h1>Vue 3 Task List</h1>
       <TaskInput />
       <TaskList />
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import TaskInput from './components/TaskInput.vue'
 import TaskList from './components/TaskList.vue'
 
 export default {
   name: 'App',
-  components: {
-    TaskInput,
-    TaskList
+  setup() {
+    return {
+      TaskInput,
+      TaskList
+    }
   }
 }
 </script>
