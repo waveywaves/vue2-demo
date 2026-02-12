@@ -10,20 +10,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ref } from 'vue'
+import { useTaskStore } from '@/stores/taskStore'
+
 export default {
   name: 'TaskInput',
-  data() {
-    return {
-      newTask: ''
-    }
-  },
-  methods: {
-    addTask() {
-      if (this.newTask.trim()) {
-        this.$store.commit('ADD_TASK', this.newTask.trim())
-        this.newTask = ''
+  setup() {
+    const newTask = ref<string>('')
+    const taskStore = useTaskStore()
+
+    function addTask() {
+      if (newTask.value.trim()) {
+        taskStore.addTask(newTask.value.trim())
+        newTask.value = ''
       }
+    }
+
+    return {
+      newTask,
+      addTask
     }
   }
 }
@@ -31,29 +37,36 @@ export default {
 
 <style scoped>
 .task-input {
+  --input-border-color: #ddd;
+  --input-border-radius: 4px;
+  --button-bg: #333;
+  --button-bg-hover: #555;
+  --button-text-color: white;
+  --spacing-base: 8px;
+
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
+  gap: var(--spacing-base);
+  margin-bottom: calc(var(--spacing-base) * 3);
 }
 
 input {
   flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: calc(var(--spacing-base) * 1.5);
+  border: 1px solid var(--input-border-color);
+  border-radius: var(--input-border-radius);
   font-size: 16px;
 }
 
 button {
-  padding: 12px 24px;
-  background: #333;
-  color: white;
+  padding: calc(var(--spacing-base) * 1.5) calc(var(--spacing-base) * 3);
+  background: var(--button-bg);
+  color: var(--button-text-color);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--input-border-radius);
   cursor: pointer;
 }
 
 button:hover {
-  background: #555;
+  background: var(--button-bg-hover);
 }
 </style>
